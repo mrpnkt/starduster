@@ -1,5 +1,4 @@
 # starduster
-Searchable list of starred repositories
 
 1. Create Github API token (https://github.com/settings/tokens) with read:user, repo permission  
 2. Execute `python3 stars.py`. Enter token. File gets written to `starred_repositories.csv` 
