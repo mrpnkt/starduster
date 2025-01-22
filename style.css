@@ -1,0 +1,84 @@
+body {
+  font-family: 'Hack Nerd Font', sans-serif;
+  margin: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+#controls {
+  margin: 20px 0;
+}
+
+#search-bar {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-family: 'Hack Nerd Font', sans-serif;
+}
+
+#tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.tag:hover {
+  background-color: #ddd;
+}
+
+#repo-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#repo-table th, #repo-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+#repo-table th {
+  background-color: #f4f4f4;
+}
+
+#accordion {
+  margin-bottom: 20px;
+}
+
+#accordion-toggle {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: 'Hack Nerd Font', sans-serif;
+}
+
+#accordion-toggle:hover {
+  background-color: #0056b3;
+}
+
+#tag-cloud-container {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+html {
+  font-family: 'Hack Nerd Font', sans-serif;
+}
