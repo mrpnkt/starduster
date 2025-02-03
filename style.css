@@ -1,6 +1,7 @@
 body {
   font-family: 'Hack Nerd Font', sans-serif;
   margin: 20px;
+  font-size: 12px;
 }
 
 h1 {
@@ -14,7 +15,7 @@ h1 {
 #search-bar {
   width: 100%;
   padding: 10px;
-  font-size: 16px;
+  font-size: 12px;
   margin-bottom: 20px;
   font-family: 'Hack Nerd Font', sans-serif;
 }
@@ -38,8 +39,17 @@ h1 {
 }
 
 #repo-table {
-  width: 100%;
+  width: 90%;
+  max-width: 100%;
+  margin: 0 auto;
+  table-layout: auto;
   border-collapse: collapse;
+}
+
+@media (max-width: 768px) {
+  #repo-table {
+    width: 100%;
+  }
 }
 
 #repo-table th, #repo-table td {
@@ -56,12 +66,15 @@ h1 {
   margin-bottom: 20px;
 }
 
-#accordion-toggle {
+#accordion-toggle, #reset-button {
+  float: left;
   background-color: #007BFF;
   color: white;
   border: none;
   padding: 10px 20px;
-  font-size: 16px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  font-size: 12px;
   cursor: pointer;
   border-radius: 4px;
   font-family: 'Hack Nerd Font', sans-serif;
