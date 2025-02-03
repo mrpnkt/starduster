@@ -7,17 +7,17 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Starred GitHub Repositories</h1>
+  <h1><a href="#">Starred GitHub Repositories</a></h1>
 
   <div id="controls">
     <input type="text" id="search-bar" placeholder="Search repositories..." oninput="filterTable()">
     <div id="accordion">
-  <button id="accordion-toggle" onclick="toggleTagCloud()">Show Tags</button>
-  <div id="tag-cloud-container" style="display: none;">
-    <div id="tag-cloud"></div>
-  </div>
-</div>
-
+      <button id="reset-button" onclick="resetFilters()">Reset</button>
+      <button id="accordion-toggle" onclick="toggleTagCloud()">Show Tags</button>
+      <div id="tag-cloud-container" style="display: none;">
+        <div id="tag-cloud"></div>
+      </div>
+    </div>
   </div>
 
   <table id="repo-table">
