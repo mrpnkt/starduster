@@ -1,0 +1,68 @@
+/* Filter sidebar: collapsible groups of checkable options with live counts. */
+.facet { border-top: 1px solid var(--border); padding: 8px 0; }
+.facet:first-child { border-top: 0; }
+
+.facet__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 3px 0;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+.facet__toggle:hover { color: var(--text); }
+.facet__chevron { transition: transform 0.12s ease; font-size: 12px; line-height: 1; }
+.facet.is-collapsed .facet__chevron { transform: rotate(-90deg); }
+.facet.is-collapsed .facet__body { display: none; }
+
+.facet__body { margin-top: 5px; }
+
+.facet__group-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
+  margin: 7px 0 2px;
+  font-weight: 600;
+}
+
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  line-height: 1.35;
+}
+.opt:hover { background: var(--surface-2); }
+.opt input { margin: 0; accent-color: var(--accent); flex: none; }
+.opt__label { flex: 1; min-width: 0; overflow: hidden;
+              text-overflow: ellipsis; white-space: nowrap; }
+.opt__count { color: var(--text-faint); font-size: 11px;
+              font-family: var(--font); flex: none; }
+.opt.is-empty { opacity: 0.4; }
+
+.facet__more {
+  background: none; border: 0; padding: 3px 4px; margin-top: 3px;
+  color: var(--accent); cursor: pointer; font-size: 11px;
+}
+.facet__more:hover { text-decoration: underline; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--accent-soft); color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px; padding: 2px 9px; font-size: 11px;
+  font-family: var(--font);
+}
+.chip button { background: none; border: 0; color: inherit; cursor: pointer;
+               padding: 0; line-height: 1; font-size: 13px; }

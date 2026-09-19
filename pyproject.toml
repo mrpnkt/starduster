@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "starduster"
+version = "2.0.0"
+description = "Always-on, locally categorized catalog of your GitHub stars"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.0",
+    "requests>=2.32.0",
+]
+
+[project.optional-dependencies]
+# Only needed on your machine, for `starduster taxonomy` (clustering).
+local = [
+    "scikit-learn>=1.5",
+]
+dev = [
+    "scikit-learn>=1.5",
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "responses>=0.25",
+    "pytest-playwright>=0.5",
+]
+
+[project.scripts]
+starduster = "starduster.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/starduster"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.coverage.run]
+source = ["starduster"]

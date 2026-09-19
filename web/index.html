@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starduster — starred repositories</title>
+  <meta name="description" content="A browsable, categorized catalog of starred GitHub repositories.">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/facets.css">
+  <link rel="stylesheet" href="css/list.css">
+</head>
+<body>
+<a class="skip-link" href="#results">Skip to results</a>
+
+<header class="topbar">
+  <div class="topbar__brand">
+    <h1>Starduster</h1>
+    <p class="topbar__meta" id="corpus-meta" aria-live="polite">Loading…</p>
+  </div>
+
+  <div class="topbar__search">
+    <label class="visually-hidden" for="search">Search repositories</label>
+    <input type="search" id="search" placeholder="Search name, summary, tags…"
+           autocomplete="off" spellcheck="false">
+    <button type="button" id="clear-search" class="btn btn--ghost" hidden>Clear</button>
+  </div>
+
+  <nav class="topbar__views" aria-label="Views">
+    <button type="button" class="btn view-btn is-active" data-view="all">All</button>
+    <button type="button" class="btn view-btn" data-view="graveyard"
+            title="Archived, or no commits in over two years">Graveyard</button>
+    <button type="button" class="btn view-btn" data-view="rediscover"
+            title="A random handful you starred long ago">Rediscover</button>
+    <button type="button" class="btn btn--ghost" id="theme-toggle"
+            aria-label="Toggle colour scheme">◐</button>
+  </nav>
+</header>
+
+<main class="shell">
+  <aside class="sidebar" id="facets" aria-label="Filters">
+    <div class="sidebar__head">
+      <h2>Filters</h2>
+      <button type="button" id="reset-filters" class="btn btn--ghost">Reset</button>
+      <button type="button" id="toggle-filters" class="btn btn--ghost sidebar__toggle"
+              aria-controls="facet-groups" aria-expanded="false">Show</button>
+    </div>
+    <div id="facet-groups"></div>
+  </aside>
+
+  <section class="results" id="results" aria-live="polite">
+    <div class="results__bar">
+      <p id="result-count" class="results__count"></p>
+      <div class="results__sort">
+        <label class="visually-hidden" for="sort">Sort by</label>
+        <select id="sort">
+          <option value="relevance">Best match</option>
+          <option value="starred_desc">Recently starred</option>
+          <option value="starred_asc">First starred</option>
+          <option value="stars_desc">Most stars</option>
+          <option value="stars_asc">Fewest stars</option>
+          <option value="pushed_desc">Recently updated</option>
+          <option value="pushed_asc">Least recently updated</option>
+          <option value="name_asc">Name A–Z</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="active-filters" class="chips" aria-label="Active filters"></div>
+    <div id="viewport" class="viewport" tabindex="0">
+      <div id="spacer" class="viewport__spacer"><div id="rows" class="viewport__rows"></div></div>
+    </div>
+    <p id="empty-state" class="empty" hidden>Nothing matches these filters.</p>
+  </section>
+</main>
+
+<script src="vendor/minisearch.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

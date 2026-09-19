@@ -1,0 +1,111 @@
+/* Page chrome: top bar and the sidebar/results split. */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topbar__brand h1 {
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  font-family: var(--font);
+}
+
+.topbar__meta {
+  margin: 1px 0 0;
+  font-size: 11px;
+  color: var(--text-faint);
+  font-family: var(--font);
+}
+
+.topbar__search {
+  flex: 1 1 320px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  min-width: 200px;
+}
+
+.topbar__search input {
+  flex: 1;
+  padding: 7px 11px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  font-family: var(--font);
+}
+
+.topbar__views { display: flex; gap: 6px; align-items: center; }
+
+.shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  gap: 20px;
+  padding: 18px 20px 40px;
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 74px;
+  max-height: calc(100vh - 96px);
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+
+.sidebar__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.sidebar__head h2 { font-size: 12px; text-transform: uppercase;
+                    letter-spacing: 0.07em; color: var(--text-dim); }
+
+.results { min-width: 0; }
+
+.sidebar__toggle { display: none; }
+@media (max-width: 900px) { .sidebar__toggle { display: inline-block; } }
+
+.results__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.results__count { margin: 0; color: var(--text-dim); font-family: var(--font); }
+.results__count strong { color: var(--text); }
+
+.results__sort select {
+  padding: 5px 9px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.empty {
+  padding: 40px 0;
+  text-align: center;
+  color: var(--text-faint);
+}
+
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; }
+  .sidebar { position: static; max-height: none; }
+  .sidebar:not(.is-open) #facet-groups { display: none; }
+  .sidebar:not(.is-open) .sidebar__head { margin-bottom: 0; }
+  :root { --row-height: 140px; }
+}
