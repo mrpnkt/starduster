@@ -1,0 +1,33 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - run: pip install -e ".[dev]"
+      - run: python -m playwright install --with-deps chromium
+
+      - name: Python unit, integration and E2E tests
+        run: pytest --cov=starduster --cov-report=term-missing --cov-fail-under=80
+
+      - name: JavaScript unit tests
+        run: npm test

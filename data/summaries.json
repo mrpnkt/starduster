@@ -1,0 +1,107 @@
+{
+  "47Cid/wp2shell-lab": {
+    "input_hash": "b5a5398a652497b14bddb83663e9a62e",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Python library for demonstrating pre-auth SQL injection vulnerabilities in WordPress core via REST batch-route confusion.",
+    "version_key": "prompt=1"
+  },
+  "See-Sol-Lab/Picxel": {
+    "input_hash": "ee7858869d3c5392a62cfd620d7dd1dc",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Python library that turns reference images into pixel-art game assets for indie game developers.",
+    "version_key": "prompt=1"
+  },
+  "TheLinuxITGuy/Toolbox": {
+    "input_hash": "f9124a467a16b7ad72037b9a35c28c6a",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Rust desktop app for installing, removing, and running Linux admin tasks with one click, supporting multiple distributions.",
+    "version_key": "prompt=1"
+  },
+  "aielte-research/HackSynth": {
+    "input_hash": "7d4d6418037f8ea0b989fae4722530ac",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI that uses Large Language Models for autonomous penetration testing, simulating Capture The Flag challenges.",
+    "version_key": "prompt=1"
+  },
+  "asciimoo/hister": {
+    "input_hash": "39a7070a55dbabfefce7627b16d3d866",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Python library for building your own private search engine, indexing web pages and files for personal searching.",
+    "version_key": "prompt=1"
+  },
+  "attackercan/wp2shell-poc2": {
+    "input_hash": "12453756f6049dcb039cf27d9621ae7e",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Python library for demonstrating a proof-of-concept for an unauthenticated SQL injection vulnerability in WordPress core, chaining to remote code execution.",
+    "version_key": "prompt=1"
+  },
+  "dinosn/wp2shell-lab": {
+    "input_hash": "cb985bc518c4e6c099b1f16cfaddc34f",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A non-destructive detector and proof-of-concept lab for identifying and exploiting vulnerabilities in WordPress core, specifically the wp2shell vulnerability chain.",
+    "version_key": "prompt=1"
+  },
+  "groxaxo/opencode-local-setup": {
+    "input_hash": "e83a1ff19818c37b7228e1a1a4d85d73",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI that automatically syncs OpenCode models with local AI providers like LM Studio and vLLM, eliminating the need for manual model updates and API keys.",
+    "version_key": "prompt=1"
+  },
+  "hainguyents13/mechvibes": {
+    "input_hash": "eece77ece664a20f5f9b4f973d79acbc",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A JavaScript library for customizing sound effects on mechanical keyboards, with improved performance and user experience.",
+    "version_key": "prompt=1"
+  },
+  "insidetrust/awesome-ai-pentest": {
+    "input_hash": "f1839acdbe9398e01537683611ebca31",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A curated list of open-source AI-assisted penetration testing tools and frameworks for testing computer systems.",
+    "version_key": "prompt=1"
+  },
+  "michel/soulseek-rs": {
+    "input_hash": "1cff8f66d2bb853411dd1ded7e146744",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Rust-based Soulseek client and library for searching, sharing, and downloading music files over a peer-to-peer network.",
+    "version_key": "prompt=1"
+  },
+  "prettyletto/omagen": {
+    "input_hash": "3835acd2f710b42cc2e7324449fc4c87",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI that generates and applies cohesive Omarchy themes from any wallpaper, with optional desktop and bar customization.",
+    "version_key": "prompt=1"
+  },
+  "sahaj-b/wayvibes": {
+    "input_hash": "d242e31203441268aa87b65b146e4cf6",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Wayland-native CLI that plays mechanical keyboard sounds globally on keypresses.",
+    "version_key": "prompt=1"
+  },
+  "tmylla/Awesome-LLM4Cybersecurity": {
+    "input_hash": "59aeaa70d644f0f0717c2a0faa9663e1",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI that summarizes 861+ papers on LLMs for cybersecurity, organized by research question and category, and updated regularly.",
+    "version_key": "prompt=1"
+  },
+  "usmanali9525/ClickGrab": {
+    "input_hash": "6ab8c7001417bf236a6ee69d1a1c59ac",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI tool called ClickGrab detects and mitigates various clickjacking and fake CAPTCHA attacks, including new techniques like DNS ClickFix and Fake Software Downloads.",
+    "version_key": "prompt=1"
+  }
+}

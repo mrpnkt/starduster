@@ -1,0 +1,114 @@
+name: Refresh stars
+
+# Daily: fetch stars, embed only the new ones, rebuild and deploy the site.
+# Uses no paid API. The embedding model runs on the runner's CPU via Ollama.
+on:
+  schedule:
+    - cron: "17 5 * * *"   # daily, 05:17 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["web/**", "src/**", "data/taxonomy.json"]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+env:
+  # Same Ollama version and model tag as the machine that built the taxonomy,
+  # so new stars land in the same vector space (also checked by a probe).
+  OLLAMA_VERSION: "0.34.2"
+  EMBED_MODEL: "nomic-embed-text:v1.5"
+  OLLAMA_MODELS: ${{ github.workspace }}/../ollama-models
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      built: ${{ steps.build.outcome }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0   # full history so the pre-push rebase has a merge base
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - run: pip install .
+
+      # The default GITHUB_TOKEN belongs to github-actions[bot], which has no
+      # stars. STARS_TOKEN is a token of YOUR account (see README: Setup).
+      - name: Fetch stars
+        id: fetch
+        env:
+          GITHUB_TOKEN: ${{ secrets.STARS_TOKEN }}
+        run: starduster fetch
+
+      - name: Cache embedding model
+        uses: actions/cache@v6
+        with:
+          path: ${{ env.OLLAMA_MODELS }}
+          key: ollama-${{ env.OLLAMA_VERSION }}-${{ env.EMBED_MODEL }}
+
+      - name: Start Ollama
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          sudo systemctl stop ollama 2>/dev/null || true
+          mkdir -p "$OLLAMA_MODELS"
+          nohup ollama serve > "$RUNNER_TEMP/ollama.log" 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:11434/api/version && break; sleep 1; done
+          ollama pull "$EMBED_MODEL"
+
+      - name: Embed new repos
+        run: starduster embed
+
+      - name: Build site payload
+        id: build
+        if: ${{ !cancelled() && steps.fetch.outcome == 'success' }}
+        run: starduster build
+
+      # Runs even if embedding failed, so fetched data is not thrown away.
+      # web/data is a build artifact and is deliberately not committed.
+      - name: Commit refreshed data
+        if: ${{ !cancelled() && steps.fetch.outcome == 'success' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "No data changes."
+            exit 0
+          fi
+          git commit -m "chore: refresh starred repositories data"
+          for attempt in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            sleep $((attempt * 15))
+          done
+          echo "::error::Could not push refreshed data after 3 attempts"
+          exit 1
+
+      - uses: actions/configure-pages@v6
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+      - uses: actions/upload-pages-artifact@v5
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        with:
+          path: web
+
+  deploy:
+    needs: refresh
+    if: ${{ !cancelled() && needs.refresh.outputs.built == 'success' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

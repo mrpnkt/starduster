@@ -1,0 +1,280 @@
+{
+  "categories": [
+    {
+      "definition": "Open-source intelligence: people, email, social media and dark-web investigation tools and link collections.",
+      "disambiguation": "",
+      "id": "open-source-intelligence-tools",
+      "name": "OSINT Tools & Resources",
+      "parent": "recon"
+    },
+    {
+      "definition": "All-in-one reconnaissance frameworks that chain many tools against a target (reconFTW, recon-ng).",
+      "disambiguation": "",
+      "id": "reconnaissance-toolkit",
+      "name": "Recon Automation Frameworks",
+      "parent": "recon"
+    },
+    {
+      "definition": "Subdomain enumeration, URL mining, crawlers and search-engine scrapers for mapping an attack surface.",
+      "disambiguation": "",
+      "id": "subdomain-crawler",
+      "name": "Subdomain & URL Discovery",
+      "parent": "recon"
+    },
+    {
+      "definition": "Tools built on Telegram and other messengers: scrapers, downloaders, monitoring bots and Telegram-controlled RATs.",
+      "disambiguation": "",
+      "id": "telegram-osint-tools",
+      "name": "Telegram & Messenger Tools",
+      "parent": "recon"
+    },
+    {
+      "definition": "Automated vulnerability scanners, Nmap NSE scripts and deliberately vulnerable practice apps.",
+      "disambiguation": "",
+      "id": "vulnerability-scanners",
+      "name": "Vulnerability Scanners",
+      "parent": "recon"
+    },
+    {
+      "definition": "Web application and bug-bounty tooling: directory discovery, XSS/SSRF scanners, all-in-one recon platforms.",
+      "disambiguation": "",
+      "id": "security-reconnaissance-tools",
+      "name": "Web Security & Bug Bounty Tools",
+      "parent": "recon"
+    },
+    {
+      "definition": "Proof-of-concept exploits for specific CVEs (SMBGhost, PrintNightmare, BlueKeep, WinRAR, ...).",
+      "disambiguation": "",
+      "id": "vulnerability-exploitation-tools",
+      "name": "CVE Exploits & PoCs",
+      "parent": "offense"
+    },
+    {
+      "definition": "Docker/Kubernetes attack and hardening, network scanning dashboards, infrastructure scripts and C2 frameworks.",
+      "disambiguation": "",
+      "id": "post-exploitation-frameworks",
+      "name": "Containers, Infrastructure & C2",
+      "parent": "offense"
+    },
+    {
+      "definition": "Hardware attack platforms and firmware: ESP32/Flipper/nRF tools, keystroke injection, Bluetooth hacking.",
+      "disambiguation": "",
+      "id": "wireless-penetration-testing-tools",
+      "name": "Hardware Hacking: ESP32, BadUSB & Bluetooth",
+      "parent": "offense"
+    },
+    {
+      "definition": "Linux privilege-escalation enumeration, rootkits and bootkits, and covering tracks on compromised hosts.",
+      "disambiguation": "",
+      "id": "bootkit-exploitation",
+      "name": "Linux Privesc & Rootkits",
+      "parent": "offense"
+    },
+    {
+      "definition": "Android and iOS hacking, APK analysis and mobile phishing/surveillance tools.",
+      "disambiguation": "",
+      "id": "android-exploitation-tools",
+      "name": "Mobile Security (Android & iOS)",
+      "parent": "offense"
+    },
+    {
+      "definition": "Hash cracking (hashcat), wordlists, and brute-forcing or spraying network logins.",
+      "disambiguation": "",
+      "id": "password-cracking-tools",
+      "name": "Password Cracking & Brute Force",
+      "parent": "offense"
+    },
+    {
+      "definition": "Standalone Python offensive scripts: RAT generators, password spraying, credential and info dumping.",
+      "disambiguation": "",
+      "id": "keylog-exploitation-tools",
+      "name": "Python Security Scripts",
+      "parent": "offense"
+    },
+    {
+      "definition": "Shellcode loaders, reverse-shell payload generators and AV/EDR-evasive payload tooling.",
+      "disambiguation": "",
+      "id": "shellcode-payload-development",
+      "name": "Shellcode Loaders & Payloads",
+      "parent": "offense"
+    },
+    {
+      "definition": "Proxies, tunnels, VPN/Tor, DNS rebinding and covert channels, and machine-in-the-middle attacks.",
+      "disambiguation": "",
+      "id": "network-exploitation-tools",
+      "name": "Tunneling, DNS & Machine-in-the-Middle",
+      "parent": "offense"
+    },
+    {
+      "definition": "Wi-Fi auditing (WPA handshakes, deauth), packet capture and network sniffing frameworks like bettercap.",
+      "disambiguation": "",
+      "id": "wireless-security-testing",
+      "name": "Wi-Fi & Network Sniffing",
+      "parent": "offense"
+    },
+    {
+      "definition": "Active Directory enumeration, LDAP, ACL auditing, lab environments and AD attack toolsets.",
+      "disambiguation": "",
+      "id": "active-directory-enumeration-and-exploitation",
+      "name": "Active Directory Attacks & Audits",
+      "parent": "post"
+    },
+    {
+      "definition": "Browser credential/cookie extraction, browser forensics and malicious or security-focused browser extensions.",
+      "disambiguation": "",
+      "id": "browser-exploitation-tools",
+      "name": "Browser Data & Extensions",
+      "parent": "post"
+    },
+    {
+      "definition": "C#/.NET post-exploitation tools, mostly the Sharp* family (SharpSploit, SharpUp, SharpWMI).",
+      "disambiguation": "",
+      "id": "post-exploitation-tools",
+      "name": "C# Offensive Tooling",
+      "parent": "post"
+    },
+    {
+      "definition": "DLL hijacking and side-loading, EDR evasion loaders, and LSASS/credential dumping on Windows.",
+      "disambiguation": "",
+      "id": "dll-hijacking-tools",
+      "name": "DLL Hijacking, EDR Bypass & LSASS Dumping",
+      "parent": "post"
+    },
+    {
+      "definition": "User enumeration, password spraying and attacks against Office 365, Exchange/OWA, Lync and Skype for Business.",
+      "disambiguation": "",
+      "id": "microsoft-office-exploitation",
+      "name": "Microsoft 365 & Exchange Attacks",
+      "parent": "post"
+    },
+    {
+      "definition": "PowerShell frameworks and scripts for post-exploitation, obfuscation and internal Windows testing (PowerSploit, Nishang).",
+      "disambiguation": "",
+      "id": "powershell-post-exploitation",
+      "name": "PowerShell Offensive Toolkits",
+      "parent": "post"
+    },
+    {
+      "definition": "Personal collections of miscellaneous scripts, mostly PowerShell, rather than single tools.",
+      "disambiguation": "",
+      "id": "post-exploitation-scripting",
+      "name": "Script Grab-Bags",
+      "parent": "post"
+    },
+    {
+      "definition": "Windows privilege escalation, UAC bypasses, potato exploits, exploit suggesters and event-log tooling.",
+      "disambiguation": "",
+      "id": "windows-privilege-escalation",
+      "name": "Windows Privesc & UAC Bypass",
+      "parent": "post"
+    },
+    {
+      "definition": "Assessing, hunting in and responding to incidents in Azure, Entra ID and Microsoft 365 (KQL, Sentinel).",
+      "disambiguation": "",
+      "id": "azure-security-hunting-tools",
+      "name": "Azure & Microsoft Cloud Security",
+      "parent": "defense"
+    },
+    {
+      "definition": "Malware analysis, sandbox/VM evasion techniques, reverse-engineering labs and malware research.",
+      "disambiguation": "",
+      "id": "malware-analysis-tools",
+      "name": "Malware Techniques & Analysis",
+      "parent": "defense"
+    },
+    {
+      "definition": "Threat intelligence, IOC feeds, detection/hunting resources, incident response and adversary emulation.",
+      "disambiguation": "",
+      "id": "threat-intelligence-tools",
+      "name": "Threat Intel & Incident Response",
+      "parent": "defense"
+    },
+    {
+      "definition": "Curated hacking resources, roadmaps, courses, CTF material and cheat sheets.",
+      "disambiguation": "",
+      "id": "infosec-essentials",
+      "name": "Hacking Guides & Cheat Sheets",
+      "parent": "learn"
+    },
+    {
+      "definition": "Loosely related research: OSCP notes, talk material, one-off exploits and small enumeration tools.",
+      "disambiguation": "",
+      "id": "post-exploitation-tools-presentations",
+      "name": "Miscellaneous Security Research",
+      "parent": "learn"
+    },
+    {
+      "definition": "General penetration-testing frameworks, tool collections, notes, cookbooks and public reports.",
+      "disambiguation": "",
+      "id": "penetration-testing-frameworks",
+      "name": "Pentest Frameworks & Notes",
+      "parent": "learn"
+    },
+    {
+      "definition": "LLMs, local AI runtimes, chat front-ends, image/voice/video generation and AI-assisted tooling.",
+      "disambiguation": "",
+      "id": "large-language-model-development",
+      "name": "AI & Generative Models",
+      "parent": "general"
+    },
+    {
+      "definition": "Awesome-lists and self-hostable applications (read-later, notes, asset management, privacy front-ends).",
+      "disambiguation": "",
+      "id": "awesome-security-tools",
+      "name": "Awesome Lists & Self-Hosted Apps",
+      "parent": "general"
+    },
+    {
+      "definition": "Everyday desktop and terminal software: file managers, window managers, emulators, viewers, GUIs.",
+      "disambiguation": "",
+      "id": "system-administration-utilities",
+      "name": "Desktop & Terminal Utilities",
+      "parent": "general"
+    },
+    {
+      "definition": "Text editors and note apps, typesetting, desktop theming (Omarchy), fonts, ASCII art and developer toolboxes.",
+      "disambiguation": "",
+      "id": "ascii-art-and-font-exploration",
+      "name": "Editors, Themes & Dev Tools",
+      "parent": "general"
+    },
+    {
+      "definition": "Python libraries and utilities, many security-adjacent: Scapy, Impacket examples, oletools, pipx.",
+      "disambiguation": "",
+      "id": "malware-analysis-tools-python",
+      "name": "Python Libraries & Utilities",
+      "parent": "general"
+    }
+  ],
+  "groups": [
+    {
+      "id": "recon",
+      "name": "Recon & OSINT"
+    },
+    {
+      "id": "offense",
+      "name": "Exploitation & Payloads"
+    },
+    {
+      "id": "post",
+      "name": "Post-Exploitation, Windows & AD"
+    },
+    {
+      "id": "defense",
+      "name": "Defense, Forensics & Threat Intel"
+    },
+    {
+      "id": "learn",
+      "name": "Guides & Collections"
+    },
+    {
+      "id": "general",
+      "name": "General Software"
+    }
+  ],
+  "pins": {
+    "asciimoo/hister": "awesome-security-tools",
+    "groxaxo/opencode-local-setup": "large-language-model-development"
+  },
+  "version": "2026-09-19-hand-edited"
+}

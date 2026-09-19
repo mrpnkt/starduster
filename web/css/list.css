@@ -1,0 +1,95 @@
+/* Virtualized result list. Rows are absolutely positioned inside a spacer
+   sized to the full result count, so only the visible window is in the DOM. */
+.viewport {
+  position: relative;
+  height: calc(100vh - 190px);
+  min-height: 340px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.viewport__spacer { position: relative; width: 100%; }
+.viewport__rows { position: absolute; top: 0; left: 0; right: 0; }
+
+.row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--row-height);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+}
+.row:hover { background: var(--surface-2); }
+
+.row__head, .row__foot { flex-shrink: 0; }
+.row__head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+
+.row__name {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.row__owner { color: var(--text-faint); font-weight: 400; }
+
+.row__summary {
+  margin: 0;
+  color: var(--text);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.row__summary--fallback { color: var(--text-dim); font-style: italic; }
+
+.row__foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  font-family: var(--font);
+  color: var(--text-dim);
+  margin-top: auto;
+}
+
+.tag {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0 6px;
+  cursor: pointer;
+  color: var(--text-dim);
+}
+.tag:hover { border-color: var(--accent); color: var(--accent); }
+.tag--cat { background: var(--accent-soft); border-color: var(--accent);
+            color: var(--accent); font-weight: 600; }
+.tag--untagged { background: var(--warn-soft); border-color: var(--warn);
+                 color: var(--warn); cursor: default; }
+
+.pill { padding: 0 6px; border-radius: var(--radius-sm); }
+.pill--archived, .pill--dormant { background: var(--dead-soft); color: var(--dead); }
+.pill--stale { background: var(--warn-soft); color: var(--warn); }
+
+.row__stars { font-variant-numeric: tabular-nums; }
+.row__sep { color: var(--border-strong); }
+
+.row__topics {
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 40ch;
+}
+
+.tag--similar { border-style: dashed; }
