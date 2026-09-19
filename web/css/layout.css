@@ -18,6 +18,18 @@
   font-family: var(--font);
 }
 
+.brand { color: var(--text); text-decoration: none; }
+.brand:hover { color: var(--accent); text-decoration: none; }
+
+.view-note {
+  margin: 0 0 10px;
+  padding: 7px 11px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+}
+
 .topbar__meta {
   margin: 1px 0 0;
   font-size: 11px;
@@ -107,5 +119,4 @@
   .sidebar { position: static; max-height: none; }
   .sidebar:not(.is-open) #facet-groups { display: none; }
   .sidebar:not(.is-open) .sidebar__head { margin-bottom: 0; }
-  :root { --row-height: 140px; }
 }

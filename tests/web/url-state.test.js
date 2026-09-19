@@ -46,3 +46,10 @@ test("like round-trips and rejects malformed names", () => {
   assert.equal(parseState("?like=<script>").like, "");
   assert.equal(parseState("?like=noslash").like, "");
 });
+
+test("topic filters round-trip through the URL", () => {
+  const filters = toggleFilter(emptyFilters(), "topic", "reverse-engineering");
+  const state = withState(DEFAULT_STATE, { filters });
+  assert.match(serializeState(state), /topic=reverse-engineering/);
+  assert.deepEqual(parseState(serializeState(state)).filters.topic, ["reverse-engineering"]);
+});

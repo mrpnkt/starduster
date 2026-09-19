@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Starduster — starred repositories</title>
+  <title>StarDuster — starred repositories</title>
   <meta name="description" content="A browsable, categorized catalog of starred GitHub repositories.">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
@@ -15,7 +15,7 @@
 
 <header class="topbar">
   <div class="topbar__brand">
-    <h1>Starduster</h1>
+    <h1><a href="./" class="brand" title="Back to all repos (clears filters)">🤩 StarDuster</a></h1>
     <p class="topbar__meta" id="corpus-meta" aria-live="polite">Loading…</p>
   </div>
 
@@ -31,7 +31,7 @@
     <button type="button" class="btn view-btn" data-view="graveyard"
             title="Archived, or no commits in over two years">Graveyard</button>
     <button type="button" class="btn view-btn" data-view="rediscover"
-            title="A random handful you starred long ago">Rediscover</button>
+            title="15 random repos you starred over 2 years ago; click again to reshuffle">🎲 Random old stars</button>
     <button type="button" class="btn btn--ghost" id="theme-toggle"
             aria-label="Toggle colour scheme">◐</button>
   </nav>
@@ -66,9 +66,10 @@
       </div>
     </div>
 
+    <p id="view-note" class="view-note" hidden></p>
     <div id="active-filters" class="chips" aria-label="Active filters"></div>
     <div id="viewport" class="viewport" tabindex="0">
-      <div id="spacer" class="viewport__spacer"><div id="rows" class="viewport__rows"></div></div>
+      <div id="rows" class="viewport__rows"></div>
     </div>
     <p id="empty-state" class="empty" hidden>Nothing matches these filters.</p>
   </section>

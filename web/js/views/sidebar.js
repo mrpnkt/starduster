@@ -73,7 +73,7 @@ export function createSidebar({ container, taxonomy, categoryNames, onToggle }) 
   function render(state, counts) {
     lastState = state;
     lastCounts = counts;
-    const sections = FACETS.map((facet) => {
+    const sections = FACETS.filter((facet) => !facet.hidden).map((facet) => {
       const selected = state.filters[facet.key] || [];
       const facetCounts = counts[facet.key];
       if (!facetCounts.size && !selected.length) return null;

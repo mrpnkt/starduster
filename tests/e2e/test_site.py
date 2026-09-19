@@ -35,7 +35,9 @@ def record(name, **over):
 
 REPOS = [
     record("alice/ratelimiter", summary="A token-bucket rate limiter for HTTP clients.",
-           language="Go", topics=["throttling"], similar=[2]),
+           language="Go", similar=[2], pushed="2026-03-04",
+           topics=["throttling", "http", "go", "rate-limit", "token-bucket", "middleware",
+                   "api", "backpressure", "networking", "golang", "library", "concurrency"]),
     record("bob/webthing", summary="A self-hosted bookmark manager.", category="web-apps",
            language="TypeScript", maintenance="dormant"),
     record("eve/xss", description='<img src=x onerror="window.__pwned=1">', language="Rust",
@@ -103,7 +105,8 @@ def test_graveyard_view_shows_dead_repos(page, site_url):
 
 def test_clicking_a_row_tag_applies_filter(page, site_url):
     page.goto(site_url)
-    page.locator(".row", has_text="ratelimiter").locator("button.tag", has_text="Go").click()
+    row = page.locator(".row", has_text="ratelimiter")
+    row.get_by_role("button", name="Go", exact=True).click()
     expect(count(page)).to_have_text("1")
 
 
@@ -137,3 +140,36 @@ def test_similar_view_lists_neighbours_and_is_linkable(page, site_url):
     expect(count(page)).to_have_text("2")
     page.locator(".chip button").click()
     expect(count(page)).to_have_text("3")
+
+
+def test_every_topic_is_shown_and_clickable(page, site_url):
+    page.goto(site_url)
+    row = page.locator(".row", has_text="ratelimiter")
+    expect(row.locator("button.tag--topic")).to_have_count(12)
+    row.locator("button.tag--topic", has_text="#backpressure").click()
+    expect(count(page)).to_have_text("1")
+    expect(page.locator(".chip")).to_contain_text("Topic: backpressure")
+    assert "topic=backpressure" in page.url
+
+
+def test_rows_show_last_updated_date(page, site_url):
+    page.goto(site_url)
+    expect(page.locator(".row", has_text="ratelimiter")).to_contain_text("updated 2026-03-04")
+
+
+def test_brand_links_home_and_clears_filters(page, site_url):
+    page.goto(site_url + "?lang=Go&q=rate")
+    brand = page.locator("a.brand")
+    expect(brand).to_have_text("🤩 StarDuster")
+    brand.click()
+    expect(count(page)).to_have_text("3")
+    assert "?" not in page.url
+
+
+def test_special_views_explain_themselves(page, site_url):
+    page.goto(site_url)
+    expect(page.locator("#view-note")).to_be_hidden()
+    page.click("[data-view=rediscover]")
+    expect(page.locator("#view-note")).to_contain_text("starred over 2 years ago")
+    page.click("[data-view=graveyard]")
+    expect(page.locator("#view-note")).to_contain_text("archived")
