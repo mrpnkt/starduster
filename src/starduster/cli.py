@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from typing import Sequence
 
@@ -60,6 +61,9 @@ def _attach_readmes(client: GraphQLClient, repos: tuple[Repo, ...]) -> tuple[Rep
     Carried excerpts are re-prepared, bringing older data within current caps.
     """
     previous = {r.full_name: r for r in load_repos()}
+    if not previous:
+        print(f"Note: no stored repos at {config.RAW_STARS_PATH}; treating every repo as new "
+              "(expected only on the very first run).", flush=True)
     repos = tuple(
         r.with_readme(prepare_readme(previous[r.full_name].readme_excerpt))
         if r.full_name in previous else r
@@ -85,10 +89,13 @@ def cmd_fetch(args: argparse.Namespace) -> int:
     if collected:
         print(f"Resuming from checkpoint: {len(collected)} repos already fetched")
 
+    started = time.monotonic()
+
     def on_page(repos, cursor):
         write_json(config.FETCH_CHECKPOINT_PATH,
                    {"cursor": cursor, "repos": [repo_to_dict(r) for r in repos]})
-        print(f"  {len(repos)} repos fetched", end="\r", flush=True)
+        # One line per page (not \r): CI logs show each line as it arrives.
+        print(f"  {len(repos)} repos fetched ({time.monotonic() - started:.0f}s)", flush=True)
 
     try:
         repos, total = fetch_stars(client, cursor=checkpoint.get("cursor"),
@@ -97,7 +104,7 @@ def cmd_fetch(args: argparse.Namespace) -> int:
         print(f"\nFetch failed: {exc}\nCheckpoint kept; re-run `fetch` to resume.", file=sys.stderr)
         return 1
 
-    print(f"\nFetched {len(repos)} of {total} starred repos")
+    print(f"Fetched {len(repos)} of {total} starred repos in {time.monotonic() - started:.0f}s", flush=True)
     if not args.skip_readmes:
         repos = _attach_readmes(client, repos)
     save_repos(repos)
@@ -114,23 +121,37 @@ def cmd_embed(args: argparse.Namespace) -> int:
     if not repos:
         raise SystemExit("No repos. Run `starduster fetch` first.")
     ollama = _ollama()
+    clock = time.monotonic()
+
+    def say(msg: str) -> None:
+        print(f"[{time.monotonic() - clock:6.1f}s] {msg}", flush=True)
+
     try:
         digest = ollama.model_digest(config.EMBED_MODEL)
+        say(f"model {config.EMBED_MODEL} installed (digest {digest[:12]})")
         es = empty(digest) if args.rebuild else load_embeddings(config.EMBEDDINGS_PATH)
+        if not args.rebuild and not es.names:
+            say(f"Note: no stored embeddings at {config.EMBEDDINGS_PATH}; embedding everything "
+                "(expected only on the very first run)")
+        say(f"{len(es.names)} stored embeddings; {len(es.missing(repos))} of {len(repos)} repos need one")
+        say("embedding parity probe (first request also loads the model)...")
         probe = ollama.embed(PROBE_TEXTS, model=config.EMBED_MODEL)
         if es.probe is not None:
             worst = check_probe(es.probe, probe, config.PROBE_MIN_SIMILARITY)
-            print(f"Embedding parity check passed (worst probe similarity {worst:.4f})")
+            say(f"parity check passed (worst probe similarity {worst:.4f})")
         else:
             es = es.with_probe(probe)
 
         todo = es.missing(repos)
         if not todo:
-            print("All repos already embedded.")
+            say("all repos already embedded")
             save_embeddings(config.EMBEDDINGS_PATH, es)
             return 0
-        print(f"Embedding {len(todo)} repo(s) with {config.EMBED_MODEL}...")
-        vectors = ollama.embed([embedding_text(r) for r in todo], model=config.EMBED_MODEL)
+        say(f"embedding {len(todo)} repo(s)...")
+        vectors = ollama.embed(
+            [embedding_text(r) for r in todo], model=config.EMBED_MODEL,
+            on_batch=lambda done, total: say(f"  {done}/{total} embedded"),
+        )
         es = es.with_added(tuple(r.full_name for r in todo), vectors, digest=digest)
     except (OllamaError, ProbeError, EmbeddingError) as exc:
         print(f"Embedding failed: {exc}", file=sys.stderr)

@@ -91,6 +91,7 @@ class GraphQLClient:
         *,
         session: requests.Session | None = None,
         sleep: Callable[[float], None] = time.sleep,
+        log: Callable[[str], None] = lambda msg: print(msg, flush=True),
     ) -> None:
         if not token:
             raise GitHubError(
@@ -101,6 +102,7 @@ class GraphQLClient:
         self._token = token
         self._session = session or requests.Session()
         self._sleep = sleep
+        self._log = log
         self.rate_limit_remaining: int | None = None
 
     def execute(self, query: str, variables: Mapping[str, Any]) -> dict[str, Any]:
@@ -110,7 +112,10 @@ class GraphQLClient:
 
         for attempt in range(MAX_ATTEMPTS):
             if attempt:
-                self._sleep(last.wait if last.wait is not None else delay)
+                wait = last.wait if last.wait is not None else delay
+                self._log(f"  GitHub: {last.reason}; retrying in {wait:.0f}s "
+                          f"(attempt {attempt + 1}/{MAX_ATTEMPTS})")
+                self._sleep(wait)
                 delay = min(delay * 2, BACKOFF_MAX_SECONDS)
 
             outcome = self._attempt(query, variables)

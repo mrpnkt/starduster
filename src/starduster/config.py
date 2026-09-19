@@ -8,7 +8,10 @@ from typing import Final
 
 # --- Paths -------------------------------------------------------------------
 
-ROOT: Final[Path] = Path(__file__).resolve().parents[2]
+# The checkout being operated on: the working directory, or STARDUSTER_ROOT.
+# Never derived from __file__: after a regular `pip install .` that points into
+# site-packages, and CI silently ran against an empty data directory.
+ROOT: Final[Path] = Path(os.environ.get("STARDUSTER_ROOT") or Path.cwd()).resolve()
 DATA_DIR: Final[Path] = ROOT / "data"
 WEB_DIR: Final[Path] = ROOT / "web"
 WEB_DATA_DIR: Final[Path] = WEB_DIR / "data"
@@ -65,7 +68,9 @@ README_CLASSIFY_TOKENS: Final[int] = 300   # Pass C already has the summary
 OLLAMA_URL: Final[str] = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
 EMBED_MODEL: Final[str] = "nomic-embed-text:v1.5"
 LLM_MODEL: Final[str] = os.environ.get("STARDUSTER_LLM", "llama3.2:3b")
-OLLAMA_TIMEOUT_SECONDS: Final[float] = 300.0
+# (connect, read) seconds per request. A stalled server fails a step in
+# minutes instead of silently holding it (the first CI run hung for 15+ min).
+OLLAMA_TIMEOUT: Final[tuple[float, float]] = (10.0, 120.0)
 EMBED_BATCH_SIZE: Final[int] = 32
 
 # nomic-embed-text expects a task prefix; "clustering: " suits grouping.

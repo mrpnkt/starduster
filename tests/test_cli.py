@@ -33,7 +33,7 @@ class FakeOllama:
     def model_digest(self, model):
         return self.digest
 
-    def embed(self, texts, *, model):
+    def embed(self, texts, *, model, on_batch=None):
         self.embedded.extend(texts)
         rows = []
         for t in texts:

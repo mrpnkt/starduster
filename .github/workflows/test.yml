@@ -23,7 +23,8 @@ jobs:
         with:
           node-version: "22"
 
-      - run: pip install -e ".[dev]"
+      # Regular (non-editable) install, same as the Refresh workflow uses.
+      - run: pip install ".[dev]"
       - run: python -m playwright install --with-deps chromium
 
       - name: Python unit, integration and E2E tests

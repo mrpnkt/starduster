@@ -88,3 +88,31 @@ def test_model_digest(client):
     assert client.model_digest("m:v1") == "bbb"
     with pytest.raises(OllamaError, match="ollama pull nope"):
         client.model_digest("nope")
+
+
+@responses.activate
+def test_embed_reports_progress_per_batch(client):
+    def reply(request):
+        n = len(json.loads(request.body)["input"])
+        return 200, {}, json.dumps({"embeddings": [[1.0, 0.0]] * n})
+    responses.add_callback(responses.POST, f"{URL}/api/embed", callback=reply)
+    seen = []
+    client.embed(["a"] * 5, model="m", batch_size=2, on_batch=lambda done, total: seen.append((done, total)))
+    assert seen == [(2, 5), (4, 5), (5, 5)]
+
+
+@responses.activate
+def test_timeout_is_retried_then_reported_with_the_limit():
+    lines = []
+    c = OllamaClient(URL, sleep=lambda _s: None, log=lines.append)
+    for _ in range(3):
+        responses.add(responses.POST, f"{URL}/api/embed", body=requests.ReadTimeout("slow"))
+    with pytest.raises(OllamaError, match="did not answer"):
+        c.embed(["a"], model="m")
+    assert len(lines) == 2, "a line per retry"
+
+
+def test_timeouts_are_bounded():
+    from starduster import config
+    connect, read = config.OLLAMA_TIMEOUT
+    assert connect <= 10 and read <= 120
