@@ -56,3 +56,16 @@ test("multi-valued labels match any selected label", () => {
   assert.ok(matchesFacets(rec("a/b", { labels: ["cli", "tui"] }), f));
   assert.ok(!matchesFacets(rec("a/b", { labels: ["cli"] }), f));
 });
+
+test("topic filter matches any selected GitHub topic", () => {
+  const R = [rec("a/1", { topics: ["cli", "rust"] }), rec("b/2", { topics: ["web"] }), rec("c/3")];
+  const f = toggleFilter(emptyFilters(), "topic", "rust");
+  assert.deepEqual(R.filter((r) => matchesFacets(r, f)).map((r) => r.name), ["a/1"]);
+});
+
+test("topic facet is hidden from the sidebar but still counted", async () => {
+  const { FACET_BY_KEY } = await import("../../web/js/core/facets.js");
+  assert.equal(FACET_BY_KEY.topic.hidden, true);
+  const counts = countFacets([rec("a/1", { topics: ["cli"] })], emptyFilters());
+  assert.equal(counts.topic.get("cli"), 1);
+});

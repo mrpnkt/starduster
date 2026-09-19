@@ -3,8 +3,6 @@
 import { el, formatCount, safeUrl } from "../dom.js";
 import { VALUE_LABELS } from "../core/facets.js";
 
-const MAX_TAGS = 6;
-
 function filterTag(text, className, facetKey, value, onFilter) {
   return el("button", {
     type: "button",
@@ -15,7 +13,7 @@ function filterTag(text, className, facetKey, value, onFilter) {
   });
 }
 
-export function renderRow(record, top, { categoryNames, onFilter, onSimilar }) {
+export function renderRow(record, { categoryNames, onFilter, onSimilar }) {
   const [owner, name] = record.name.split("/");
   const summaryText = record.summary || record.description;
 
@@ -37,17 +35,9 @@ export function renderRow(record, top, { categoryNames, onFilter, onSimilar }) {
   for (const label of record.labels.slice(0, 3)) {
     foot.push(filterTag(label, "", "labels", label, onFilter));
   }
-  if (record.topics.length === 0) {
-    foot.push(el("span", { class: "tag tag--untagged", title: "This repo has no GitHub topics", text: "no topics" }));
-  } else {
-    foot.push(el("span", {
-      class: "row__topics",
-      title: record.topics.join(", "),
-      text: record.topics.slice(0, MAX_TAGS).map((t) => `#${t}`).join(" "),
-    }));
-  }
   foot.push(el("span", { class: "row__sep", text: "·" }));
-  foot.push(el("span", { title: "Date you starred it", text: `starred ${record.starred}` }));
+  foot.push(el("span", { class: "row__date", title: "Last commit pushed to the repo", text: `updated ${record.pushed || "unknown"}` }));
+  foot.push(el("span", { class: "row__date", title: "Date you starred it", text: `starred ${record.starred}` }));
   if (record.similar && record.similar.length) {
     foot.push(el("button", {
       type: "button", class: "tag tag--similar", title: "Show repos most like this one",
@@ -55,7 +45,7 @@ export function renderRow(record, top, { categoryNames, onFilter, onSimilar }) {
     }));
   }
 
-  return el("article", { class: "row", style: `top:${top}px` },
+  return el("article", { class: "row" },
     el("div", { class: "row__head" },
       el("a", {
         class: "row__name",
@@ -70,5 +60,9 @@ export function renderRow(record, top, { categoryNames, onFilter, onSimilar }) {
       text: summaryText || "No description.",
     }),
     el("div", { class: "row__foot" }, foot),
+    el("div", { class: "row__topics" },
+      record.topics.length
+        ? record.topics.map((t) => filterTag(`#${t}`, "tag--topic", "topic", t, onFilter))
+        : [el("span", { class: "tag tag--untagged", title: "This repo has no GitHub topics", text: "no topics" })]),
   );
 }

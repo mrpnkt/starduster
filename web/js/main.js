@@ -7,11 +7,16 @@ import { parseState, serializeState, withState } from "./core/url-state.js";
 import { createSearch } from "./search.js";
 import { renderRow } from "./views/row.js";
 import { createSidebar } from "./views/sidebar.js";
-import { createVirtualList } from "./views/virtual-list.js";
+import { createIncrementalList } from "./views/incremental-list.js";
 
 const DATA_URL = "data/repos.json";
 const SEARCH_DEBOUNCE_MS = 120;
 const THEME_KEY = "starduster-theme";
+
+const VIEW_NOTES = {
+  graveyard: "Graveyard: archived repos, or no commits in over 2 years. Candidates for unstarring.",
+  rediscover: "Random old stars: 15 random repos you starred over 2 years ago. Click the button again for another draw.",
+};
 
 const $ = (id) => document.getElementById(id);
 
@@ -60,9 +65,9 @@ function start(payload) {
   let scores = search(state.q);
 
   const sidebar = createSidebar({ container: $("facet-groups"), taxonomy, categoryNames, onToggle });
-  const list = createVirtualList({
-    viewport: $("viewport"), spacer: $("spacer"), rows: $("rows"),
-    renderItem: (record, top) => renderRow(record, top, {
+  const list = createIncrementalList({
+    viewport: $("viewport"), rows: $("rows"),
+    renderItem: (record) => renderRow(record, {
       categoryNames, onFilter: onToggle,
       onSimilar: (name) => setState(withState(state, { like: name })),
     }),
@@ -107,6 +112,9 @@ function start(payload) {
       ` of ${repos.length.toLocaleString()} repos`,
     );
     $("empty-state").hidden = results.length > 0;
+    const note = VIEW_NOTES[state.like ? "" : state.view] || "";
+    $("view-note").textContent = note;
+    $("view-note").hidden = !note;
     $("clear-search").hidden = !state.q;
     $("search").value = state.q;
     $("sort").value = state.sort;
