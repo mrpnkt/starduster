@@ -71,3 +71,5 @@
 .row__stars { font-variant-numeric: tabular-nums; }
 .row__sep { color: var(--border-strong); }
 .row__date { white-space: nowrap; }
+.tag--suggested { background: transparent; border-style: dashed; font-style: italic; color: var(--text-faint); }
+.tag--suggested:hover { border-color: var(--accent); color: var(--accent); }

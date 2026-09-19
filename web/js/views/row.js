@@ -63,6 +63,13 @@ export function renderRow(record, { categoryNames, onFilter, onSimilar }) {
     el("div", { class: "row__topics" },
       record.topics.length
         ? record.topics.map((t) => filterTag(`#${t}`, "tag--topic", "topic", t, onFilter))
-        : [el("span", { class: "tag tag--untagged", title: "This repo has no GitHub topics", text: "no topics" })]),
+        : [
+          el("span", { class: "tag tag--untagged", title: "This repo has no GitHub topics", text: "no topics" }),
+          ...(record.suggested_topics || []).map((t) => el("button", {
+            type: "button", class: "tag tag--suggested",
+            title: `Suggested: ${t} is a topic shared by several similar repos. Click to filter.`,
+            text: `≈#${t}`, onclick: () => onFilter("topic", t),
+          })),
+        ]),
   );
 }

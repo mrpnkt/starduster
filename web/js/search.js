@@ -10,7 +10,8 @@ export function createSearch(records, categoryNames) {
     fields: FIELDS,
     idField: "name",
     extractField: (doc, field) => {
-      if (field === "labels" || field === "topics") return doc[field].join(" ");
+      if (field === "labels") return doc.labels.join(" ");
+      if (field === "topics") return [...doc.topics, ...(doc.suggested_topics || [])].join(" ");
       if (field === "categoryName") return categoryNames.get(doc.category) || "";
       return doc[field] ?? "";
     },

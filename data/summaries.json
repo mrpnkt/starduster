@@ -6,6 +6,41 @@
     "summary": "A Python library for demonstrating pre-auth SQL injection vulnerabilities in WordPress core via REST batch-route confusion.",
     "version_key": "prompt=1"
   },
+  "MSNightmare/RoguePlanet": {
+    "input_hash": "2db1f711a76239a97565fd2a5f79dc63",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A C++ exploit for a Windows Defender vulnerability, allowing a SYSTEM shell to be spawned, tested on Windows 11 and 10 with specific patches installed.",
+    "version_key": "prompt=1"
+  },
+  "MansionNET/ascii-art-generator": {
+    "input_hash": "b92258a23db491d788fc4f89c85e0fc1",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A browser-based ASCII art generator that converts images to ASCII art or generates text banners in various fonts, with a focus on privacy and no server-side processing.",
+    "version_key": "prompt=1"
+  },
+  "MinishLab/semble": {
+    "input_hash": "07abbfa4bd2505d5f2e622f695207ded",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Python library called Semble provides fast and accurate code search for agents, using 99% fewer tokens than traditional methods.",
+    "version_key": "prompt=1"
+  },
+  "MythicAgents/poseidon": {
+    "input_hash": "ee8f2e98cad2ffc55367bb955a2813b6",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI that compiles into Linux and macOS executables, supporting Mythic 3.0.0, and can be installed via Mythic's command-line interface.",
+    "version_key": "prompt=1"
+  },
+  "MythicC2Profiles/http": {
+    "input_hash": "c9e0bee24909e8cb6371622d884f4a61",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI that provides a way to get HTTP messages off the wire and forward them to the Mythic server.",
+    "version_key": "prompt=1"
+  },
   "See-Sol-Lab/Picxel": {
     "input_hash": "ee7858869d3c5392a62cfd620d7dd1dc",
     "labels": [],
@@ -27,6 +62,13 @@
     "summary": "A CLI that uses Large Language Models for autonomous penetration testing, simulating Capture The Flag challenges.",
     "version_key": "prompt=1"
   },
+  "appsworld/katalina": {
+    "input_hash": "bfe4788e1bab9d5528578cb1b8aaf3b2",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Go-based tool for analyzing macOS Mach-O binaries and producing a JSON report of rich binary features.",
+    "version_key": "prompt=1"
+  },
   "asciimoo/hister": {
     "input_hash": "39a7070a55dbabfefce7627b16d3d866",
     "labels": [],
@@ -41,11 +83,32 @@
     "summary": "A Python library for demonstrating a proof-of-concept for an unauthenticated SQL injection vulnerability in WordPress core, chaining to remote code execution.",
     "version_key": "prompt=1"
   },
+  "bikini/exploitarium": {
+    "input_hash": "b8c65425ec7ffff3ee5743f0d9c8b4f0",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Python library for public exploit proof-of-concepts and vulnerability research writeups, showcasing the author's research and tools in the field of exploit development.",
+    "version_key": "prompt=1"
+  },
+  "caamer20/Telegram-Drive": {
+    "input_hash": "4b9d549e0ed8b8dc2cf5d96c82d95eb6",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A local-first file workspace built on top of Telegram, allowing users to organize and share files across multiple platforms.",
+    "version_key": "prompt=1"
+  },
   "dinosn/wp2shell-lab": {
     "input_hash": "cb985bc518c4e6c099b1f16cfaddc34f",
     "labels": [],
     "model": "llama3.2:3b",
     "summary": "A non-destructive detector and proof-of-concept lab for identifying and exploiting vulnerabilities in WordPress core, specifically the wp2shell vulnerability chain.",
+    "version_key": "prompt=1"
+  },
+  "executeatwill/ova-to-docker": {
+    "input_hash": "6925b3c13298c3329522f9b11bb8b474",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Python library that converts OVA, VMDK, and VDI files to Docker container format, supporting Linux and Windows guest operating systems and advanced storage configurations.",
     "version_key": "prompt=1"
   },
   "groxaxo/opencode-local-setup": {
@@ -62,11 +125,32 @@
     "summary": "A JavaScript library for customizing sound effects on mechanical keyboards, with improved performance and user experience.",
     "version_key": "prompt=1"
   },
+  "hevnsnt/Awesome_Incident_Response": {
+    "input_hash": "7fdd552217aba9708168e24753bd5dfb",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A PowerShell library providing a comprehensive guide and curated list of tools for incident response, aimed at security leaders and analysts.",
+    "version_key": "prompt=1"
+  },
+  "htimesnine/DarkSword-RCE": {
+    "input_hash": "1eaedd4f94f5ed13f3cf3df5850ef43f",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI tool for exploiting DarkSword webkit vulnerabilities in iOS devices.",
+    "version_key": "prompt=1"
+  },
   "insidetrust/awesome-ai-pentest": {
     "input_hash": "f1839acdbe9398e01537683611ebca31",
     "labels": [],
     "model": "llama3.2:3b",
     "summary": "A curated list of open-source AI-assisted penetration testing tools and frameworks for testing computer systems.",
+    "version_key": "prompt=1"
+  },
+  "krdmnbrk/atomicgen.io": {
+    "input_hash": "987b19ef362fb8728ebb5c752e8a5449",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI that creates Atomic Red Team tests with ease, providing a user-friendly interface and customizable options for security testing.",
     "version_key": "prompt=1"
   },
   "michel/soulseek-rs": {
@@ -76,6 +160,20 @@
     "summary": "A Rust-based Soulseek client and library for searching, sharing, and downloading music files over a peer-to-peer network.",
     "version_key": "prompt=1"
   },
+  "opa334/darksword-kexploit": {
+    "input_hash": "8c1487d4e1177176a19ff6908f388e78",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI that reimplements a DarkSword kernel exploit for iOS <= 26.0.1, originally discovered by htimesnine, and is not affiliated with Cellebrite or malicious activities.",
+    "version_key": "prompt=1"
+  },
+  "p-e-w/heretic": {
+    "input_hash": "aee29e64a7c57413bd7d3b93ca218cd2",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI tool called Heretic automatically removes censorship from language models, preserving as much of the original model's intelligence as possible.",
+    "version_key": "prompt=1"
+  },
   "prettyletto/omagen": {
     "input_hash": "3835acd2f710b42cc2e7324449fc4c87",
     "labels": [],
@@ -83,11 +181,46 @@
     "summary": "A CLI that generates and applies cohesive Omarchy themes from any wallpaper, with optional desktop and bar customization.",
     "version_key": "prompt=1"
   },
+  "quickemu-project/quickemu": {
+    "input_hash": "7532a153d2de264d3a663300781c5266",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI that creates and runs optimized virtual machines for Windows, macOS, and Linux, automating configuration and download of operating systems.",
+    "version_key": "prompt=1"
+  },
+  "redcivet/uac-bypass-method59-wd-exclude": {
+    "input_hash": "0b54be94f04c683959eba157f6a0241c",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A C library for Windows UAC bypass using Method 59, as demonstrated in a YouTube video.",
+    "version_key": "prompt=1"
+  },
   "sahaj-b/wayvibes": {
     "input_hash": "d242e31203441268aa87b65b146e4cf6",
     "labels": [],
     "model": "llama3.2:3b",
     "summary": "A Wayland-native CLI that plays mechanical keyboard sounds globally on keypresses.",
+    "version_key": "prompt=1"
+  },
+  "squidowl/halloy": {
+    "input_hash": "518d7e67538e488aebc2d44cf9aa0581",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A Rust-based IRC client for macOS, Windows, and Linux, offering a simple and fast interface with advanced IRCv3 capabilities.",
+    "version_key": "prompt=1"
+  },
+  "sw3Dan/waveshare-s2-audio_esphome_voice": {
+    "input_hash": "e5790787c56e1d086234e91ca3552d29",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A CLI that enables WAVESHARE-S3-AUDIO-BOARD for use as a HomeAssistant Voice Satellite, featuring simultaneous music and announcements, wake-word detection, and more.",
+    "version_key": "prompt=1"
+  },
+  "tahayvr/omarchist": {
+    "input_hash": "4a57259a3bd720079a213ba29b5ec9df",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A GUI app for Omarchy Linux, allowing users to design themes and manage system configurations.",
     "version_key": "prompt=1"
   },
   "tmylla/Awesome-LLM4Cybersecurity": {
@@ -102,6 +235,13 @@
     "labels": [],
     "model": "llama3.2:3b",
     "summary": "A CLI tool called ClickGrab detects and mitigates various clickjacking and fake CAPTCHA attacks, including new techniques like DNS ClickFix and Fake Software Downloads.",
+    "version_key": "prompt=1"
+  },
+  "zakirullin/files.md": {
+    "input_hash": "fcedc8e726cd94bddc60f5f114f7fdb5",
+    "labels": [],
+    "model": "llama3.2:3b",
+    "summary": "A simple, open-source app for storing and organizing notes, documents, and journal entries in plain Markdown files, with optional synchronization and a chat-like interface.",
     "version_key": "prompt=1"
   }
 }
