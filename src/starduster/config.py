@@ -65,7 +65,9 @@ README_CLASSIFY_TOKENS: Final[int] = 300   # Pass C already has the summary
 OLLAMA_URL: Final[str] = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
 EMBED_MODEL: Final[str] = "nomic-embed-text:v1.5"
 LLM_MODEL: Final[str] = os.environ.get("STARDUSTER_LLM", "llama3.2:3b")
-OLLAMA_TIMEOUT_SECONDS: Final[float] = 300.0
+# (connect, read) seconds per request. A stalled server fails a step in
+# minutes instead of silently holding it (the first CI run hung for 15+ min).
+OLLAMA_TIMEOUT: Final[tuple[float, float]] = (10.0, 120.0)
 EMBED_BATCH_SIZE: Final[int] = 32
 
 # nomic-embed-text expects a task prefix; "clustering: " suits grouping.

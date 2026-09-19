@@ -237,3 +237,25 @@ class TestRateLimits:
         c.execute("query{x}", {})
         from starduster.config import RATE_LIMIT_MAX_WAIT_SECONDS
         assert slept == [RATE_LIMIT_MAX_WAIT_SECONDS]
+
+
+class TestRetryVisibility:
+    """Silent backoff made a 12-minute fetch look like a hang in CI."""
+
+    @responses.activate
+    def test_each_retry_is_logged_with_reason_and_wait(self):
+        lines = []
+        c = GraphQLClient(token="t", sleep=lambda _s: None, log=lines.append)
+        responses.add(responses.POST, GITHUB_GRAPHQL_URL, status=502)
+        responses.add(responses.POST, GITHUB_GRAPHQL_URL, json=stars_page(["a/b"], False))
+        c.execute("query{x}", {})
+        assert len(lines) == 1
+        assert "502" in lines[0] and "retrying in" in lines[0] and "attempt 2/" in lines[0]
+
+    @responses.activate
+    def test_success_logs_nothing(self):
+        lines = []
+        c = GraphQLClient(token="t", sleep=lambda _s: None, log=lines.append)
+        responses.add(responses.POST, GITHUB_GRAPHQL_URL, json=stars_page(["a/b"], False))
+        c.execute("query{x}", {})
+        assert lines == []

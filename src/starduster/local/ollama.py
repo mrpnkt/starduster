@@ -14,7 +14,7 @@ from typing import Any, Callable, Mapping, Sequence
 import numpy as np
 import requests
 
-from ..config import EMBED_BATCH_SIZE, OLLAMA_TIMEOUT_SECONDS, OLLAMA_URL
+from ..config import EMBED_BATCH_SIZE, OLLAMA_TIMEOUT, OLLAMA_URL
 
 _RETRIES = 3
 
@@ -28,18 +28,21 @@ class OllamaClient:
         self,
         base_url: str = OLLAMA_URL,
         *,
-        timeout: float = OLLAMA_TIMEOUT_SECONDS,
+        timeout: tuple[float, float] = OLLAMA_TIMEOUT,
         sleep: Callable[[float], None] = time.sleep,
+        log: Callable[[str], None] = lambda msg: print(msg, flush=True),
     ) -> None:
         self._url = base_url.rstrip("/")
         self._timeout = timeout
         self._sleep = sleep
+        self._log = log
         self._session = requests.Session()
 
     def _request(self, method: str, path: str, model: str = "", **kwargs) -> Any:
         last = ""
         for attempt in range(_RETRIES):
             if attempt:
+                self._log(f"  Ollama {path}: {last}; retrying (attempt {attempt + 1}/{_RETRIES})")
                 self._sleep(2.0 * attempt)
             try:
                 resp = self._session.request(
@@ -50,6 +53,9 @@ class OllamaClient:
                     f"Cannot reach Ollama at {self._url} ({exc}). Start it with "
                     "`ollama serve` (or open the Ollama app)."
                 ) from exc
+            except requests.Timeout:
+                last = f"did not answer within {self._timeout[1]:.0f}s"
+                continue
             except requests.RequestException as exc:
                 last = str(exc)
                 continue
@@ -66,7 +72,8 @@ class OllamaClient:
         raise OllamaError(f"Ollama {path} failed after {_RETRIES} attempts: {last}")
 
     def embed(
-        self, texts: Sequence[str], *, model: str, batch_size: int = EMBED_BATCH_SIZE
+        self, texts: Sequence[str], *, model: str, batch_size: int = EMBED_BATCH_SIZE,
+        on_batch: Callable[[int, int], None] | None = None,
     ) -> np.ndarray:
         """Embed texts; returns unit-length float32 rows (cosine = dot product)."""
         if not texts:
@@ -81,6 +88,8 @@ class OllamaClient:
             if len(got) != len(chunk):
                 raise OllamaError(f"Ollama returned {len(got)} embeddings, expected {len(chunk)}")
             rows.extend(got)
+            if on_batch:
+                on_batch(len(rows), len(texts))
         matrix = np.asarray(rows, dtype=np.float32)
         norms = np.linalg.norm(matrix, axis=1, keepdims=True)
         return matrix / np.where(norms == 0, 1.0, norms)

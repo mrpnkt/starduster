@@ -25,6 +25,9 @@ env:
   OLLAMA_VERSION: "0.34.2"
   EMBED_MODEL: "nomic-embed-text:v1.5"
   OLLAMA_MODELS: ${{ github.workspace }}/../ollama-models
+  # Python block-buffers output to a pipe; without this, CI shows a step's
+  # progress only after it ends.
+  PYTHONUNBUFFERED: "1"
 
 jobs:
   refresh:
@@ -48,6 +51,7 @@ jobs:
       # stars. STARS_TOKEN is a token of YOUR account (see README: Setup).
       - name: Fetch stars
         id: fetch
+        timeout-minutes: 30
         env:
           GITHUB_TOKEN: ${{ secrets.STARS_TOKEN }}
         run: starduster fetch
@@ -59,6 +63,7 @@ jobs:
           key: ollama-${{ env.OLLAMA_VERSION }}-${{ env.EMBED_MODEL }}
 
       - name: Start Ollama
+        id: ollama
         run: |
           curl -fsSL https://ollama.com/install.sh | sh
           sudo systemctl stop ollama 2>/dev/null || true
@@ -66,9 +71,19 @@ jobs:
           nohup ollama serve > "$RUNNER_TEMP/ollama.log" 2>&1 &
           for i in $(seq 1 30); do curl -sf http://localhost:11434/api/version && break; sleep 1; done
           ollama pull "$EMBED_MODEL"
+          echo "Warm-up: one embedding request (loads the model into memory)"
+          start=$(date +%s)
+          curl -sS --max-time 180 http://localhost:11434/api/embed \
+            -d "{\"model\": \"$EMBED_MODEL\", \"input\": [\"warm up\"]}" | head -c 120; echo
+          echo "Warm-up took $(( $(date +%s) - start ))s"
 
       - name: Embed new repos
+        timeout-minutes: 10
         run: starduster embed
+
+      - name: Ollama server log
+        if: ${{ always() && steps.ollama.outcome != 'skipped' }}
+        run: tail -n 80 "$RUNNER_TEMP/ollama.log" || echo "(no Ollama log)"
 
       - name: Build site payload
         id: build
