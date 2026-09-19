@@ -20,6 +20,7 @@ from .categorize.centroids import load_centroids, save_centroids
 from .categorize.embeddings import EmbeddingError, empty, load_embeddings, save_embeddings
 from .categorize.probe import PROBE_TEXTS, ProbeError, check_probe
 from .categorize.similar import similar_indices
+from .categorize.topics import suggest_topics
 from .categorize.text import embedding_text
 from .github.client import GitHubError, GraphQLClient, fetch_readmes, fetch_stars
 from .github.readme import prepare_readme
@@ -255,12 +256,15 @@ def cmd_build(args: argparse.Namespace) -> int:
     classifications = _categorize(taxonomy, es, rows)
 
     entries = build_catalog(repos, load_summaries(), classifications)
-    payload = build_payload(entries, taxonomy or Taxonomy("none", (), ()), similar=similar)
+    suggested = suggest_topics(repos, es) if es.names else {}
+    payload = build_payload(entries, taxonomy or Taxonomy("none", (), ()),
+                            similar=similar, suggested=suggested)
     out = config.WEB_DATA_DIR / "repos.json"
     write_json(out, payload, compact=True)
     meta = payload["meta"]
     print(f"Wrote {out} ({out.stat().st_size / 1024:.0f} KB, {meta['total']} repos, "
-          f"{meta['unclassified']} unsorted)")
+          f"{meta['unclassified']} unsorted, {meta['suggested']} of {meta['untagged']} "
+          "untagged repos got suggested topics)")
     return 0
 
 

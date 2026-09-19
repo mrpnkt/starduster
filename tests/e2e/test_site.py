@@ -39,7 +39,7 @@ REPOS = [
            topics=["throttling", "http", "go", "rate-limit", "token-bucket", "middleware",
                    "api", "backpressure", "networking", "golang", "library", "concurrency"]),
     record("bob/webthing", summary="A self-hosted bookmark manager.", category="web-apps",
-           language="TypeScript", maintenance="dormant"),
+           language="TypeScript", maintenance="dormant", suggested_topics=["throttling"]),
     record("eve/xss", description='<img src=x onerror="window.__pwned=1">', language="Rust",
            maintenance="archived"),
 ]
@@ -173,3 +173,13 @@ def test_special_views_explain_themselves(page, site_url):
     expect(page.locator("#view-note")).to_contain_text("starred over 2 years ago")
     page.click("[data-view=graveyard]")
     expect(page.locator("#view-note")).to_contain_text("archived")
+
+
+def test_suggested_topics_are_marked_and_filter_like_real_ones(page, site_url):
+    page.goto(site_url)
+    row = page.locator(".row", has_text="webthing")
+    expect(row.locator(".tag--untagged")).to_have_text("no topics")
+    suggestion = row.locator("button.tag--suggested")
+    expect(suggestion).to_have_text("≈#throttling")
+    suggestion.click()
+    expect(count(page)).to_have_text("2")  # webthing (suggested) + ratelimiter (real)

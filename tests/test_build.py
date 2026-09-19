@@ -152,3 +152,16 @@ def test_similar_names_become_indices_into_repos():
     payload = build_payload((a, b, c), TAX, similar={"a/1": ["c/3", "gone/9", "b/2"]}, now=NOW)
     assert payload["repos"][0]["similar"] == [2, 1], "unknown names dropped, order kept"
     assert payload["repos"][1]["similar"] == []
+
+
+def test_suggested_topics_are_included_and_do_not_change_untagged_count():
+    entries = (CatalogEntry(repo("a/1", topics=()), None, None),)
+    payload = build_payload(entries, TAX, suggested={"a/1": ["osint", "recon"]}, now=NOW)
+    assert payload["repos"][0]["suggested_topics"] == ["osint", "recon"]
+    assert payload["repos"][0]["topics"] == []
+    assert payload["meta"]["untagged"] == 1
+
+
+def test_repos_without_suggestions_get_an_empty_list():
+    payload = build_payload((CatalogEntry(repo(), None, None),), TAX, now=NOW)
+    assert payload["repos"][0]["suggested_topics"] == []

@@ -109,6 +109,18 @@ NEIGHBOUR_CONSENSUS: Final[float] = 0.6
 # embedded on both and must agree to this cosine similarity.
 PROBE_MIN_SIMILARITY: Final[float] = 0.995
 
+# --- Suggested topics ----------------------------------------------------------
+#
+# Repos with no GitHub topics borrow them from their most similar tagged repos.
+# Measured on 50 held-out tagged repos (topics hidden, re-embedded without them):
+# 62% got at least one exact match; 47% of specific suggestions were exact
+# matches (more were reasonable). Beat llama3.2:3b and qwen2.5:7b on precision.
+SUGGEST_NEIGHBOURS: Final[int] = 10
+SUGGEST_MIN_VOTES: Final[int] = 3
+SUGGEST_MAX_TOPICS: Final[int] = 5
+SUGGEST_MIN_TOPIC_USES: Final[int] = 3   # only topics you already use repeatedly
+SUGGEST_STOP_TOPICS: Final[tuple[str, ...]] = ("hacktoberfest",)
+
 # --- Summaries (local LLM, optional) --------------------------------------------
 
 MAX_TOKENS_SUMMARY: Final[int] = 120

@@ -89,6 +89,7 @@ def build_payload(
     taxonomy: Taxonomy,
     *,
     similar: Mapping[str, Sequence[str]] | None = None,
+    suggested: Mapping[str, Sequence[str]] | None = None,
     now: str | None = None,
 ) -> dict[str, Any]:
     """Assemble `web/data/repos.json`.
@@ -102,6 +103,7 @@ def build_payload(
         {
             **to_record(e, now_iso),
             "similar": [index[n] for n in (similar or {}).get(e.repo.full_name, ()) if n in index],
+            "suggested_topics": list((suggested or {}).get(e.repo.full_name, ())),
         }
         for e in entries
     ]
@@ -112,6 +114,7 @@ def build_payload(
             "total": len(records),
             "unclassified": sum(1 for r in records if r["category"] is None),
             "untagged": sum(1 for r in records if not r["topics"]),
+            "suggested": sum(1 for r in records if r["suggested_topics"]),
             "unsummarized": sum(1 for r in records if not r["summary"]),
         },
         "taxonomy": taxonomy_to_dict(taxonomy),

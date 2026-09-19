@@ -23,6 +23,12 @@ and files it into categories derived from *your* collection.
 
 - Search, facets with live counts: category, maintenance (active / stale / dormant / archived), language, year starred, popularity, has-topics
 - **≈ similar** on every repo: its 10 nearest neighbours by README content
+- **Suggested topics** (`≈#topic`, dashed) on repos with no GitHub topics: topics that
+  at least 3 of its 10 most similar tagged repos share, drawn only from topics you
+  already use. Clicking any topic finds real and suggested matches. Measured on
+  held-out tagged repos: 62% got at least one exact match and 47% of specific
+  suggestions matched exactly; this beat local LLMs (`llama3.2:3b`, `qwen2.5:7b`)
+  on precision at zero cost
 - **Graveyard**: archived or no commits in 2+ years, for pruning. **Rediscover**: random old stars
 - Every view is a shareable URL; light/dark; mobile
 

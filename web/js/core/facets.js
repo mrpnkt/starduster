@@ -14,7 +14,8 @@ export const FACETS = Object.freeze([
   { key: "topics_state", param: "topics", label: "GitHub topics", get: (r) => [r.topics.length ? "has" : "none"] },
   // Thousands of distinct values, so not listed in the sidebar: applied by
   // clicking a topic on a repo, and shown as a removable chip.
-  { key: "topic", param: "topic", label: "Topic", get: (r) => r.topics, hidden: true },
+  // Includes suggested topics, so clicking #osint also finds untagged OSINT repos.
+  { key: "topic", param: "topic", label: "Topic", get: (r) => [...r.topics, ...(r.suggested_topics || [])], hidden: true },
 ]);
 
 export const FACET_BY_KEY = Object.freeze(Object.fromEntries(FACETS.map((f) => [f.key, f])));

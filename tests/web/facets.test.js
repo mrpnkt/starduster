@@ -69,3 +69,14 @@ test("topic facet is hidden from the sidebar but still counted", async () => {
   const counts = countFacets([rec("a/1", { topics: ["cli"] })], emptyFilters());
   assert.equal(counts.topic.get("cli"), 1);
 });
+
+test("topic filter also finds repos where the topic is only suggested", () => {
+  const R = [rec("a/1", { topics: ["osint"] }), rec("b/2", { suggested_topics: ["osint"] }), rec("c/3")];
+  const f = toggleFilter(emptyFilters(), "topic", "osint");
+  assert.deepEqual(R.filter((r) => matchesFacets(r, f)).map((r) => r.name), ["a/1", "b/2"]);
+});
+
+test("has-topics facet still reflects real GitHub topics only", () => {
+  const counts = countFacets([rec("b/2", { suggested_topics: ["osint"] })], emptyFilters());
+  assert.equal(counts.topics_state.get("none"), 1);
+});
