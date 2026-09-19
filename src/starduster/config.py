@@ -8,7 +8,10 @@ from typing import Final
 
 # --- Paths -------------------------------------------------------------------
 
-ROOT: Final[Path] = Path(__file__).resolve().parents[2]
+# The checkout being operated on: the working directory, or STARDUSTER_ROOT.
+# Never derived from __file__: after a regular `pip install .` that points into
+# site-packages, and CI silently ran against an empty data directory.
+ROOT: Final[Path] = Path(os.environ.get("STARDUSTER_ROOT") or Path.cwd()).resolve()
 DATA_DIR: Final[Path] = ROOT / "data"
 WEB_DIR: Final[Path] = ROOT / "web"
 WEB_DATA_DIR: Final[Path] = WEB_DIR / "data"

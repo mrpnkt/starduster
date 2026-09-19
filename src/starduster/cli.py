@@ -61,6 +61,9 @@ def _attach_readmes(client: GraphQLClient, repos: tuple[Repo, ...]) -> tuple[Rep
     Carried excerpts are re-prepared, bringing older data within current caps.
     """
     previous = {r.full_name: r for r in load_repos()}
+    if not previous:
+        print(f"Note: no stored repos at {config.RAW_STARS_PATH}; treating every repo as new "
+              "(expected only on the very first run).", flush=True)
     repos = tuple(
         r.with_readme(prepare_readme(previous[r.full_name].readme_excerpt))
         if r.full_name in previous else r
@@ -127,6 +130,9 @@ def cmd_embed(args: argparse.Namespace) -> int:
         digest = ollama.model_digest(config.EMBED_MODEL)
         say(f"model {config.EMBED_MODEL} installed (digest {digest[:12]})")
         es = empty(digest) if args.rebuild else load_embeddings(config.EMBEDDINGS_PATH)
+        if not args.rebuild and not es.names:
+            say(f"Note: no stored embeddings at {config.EMBEDDINGS_PATH}; embedding everything "
+                "(expected only on the very first run)")
         say(f"{len(es.names)} stored embeddings; {len(es.missing(repos))} of {len(repos)} repos need one")
         say("embedding parity probe (first request also loads the model)...")
         probe = ollama.embed(PROBE_TEXTS, model=config.EMBED_MODEL)
